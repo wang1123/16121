@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+<script type="text/javascript" src="jquery-1.11.2.js"></script>
+<script type="text/javascript">
+
+
+
+
+
+// (function(window,undefined){})(window);
+
+// 这个，为什么要将window和undefined作为参数传给它？
+
+
+
+// 因为 JavaScript 执行JS代码是从里到外，因此把全局变量传进来，就避免了到外层去寻找。提高效率。//window就是全局变量
+
+
+// JS 的undefined还可以做变量名。 undefined算是JS里面的什么呢？不是关键字，不是保留字，true跟false还有null也不是，不过跟undefined不同，不能用作变量名。
+
+
+
+
+//  undefined 作为变量名。
+ 
+
+
+// 	var undefined=8;
+
+// (function(window){
+
+// console.log(window.undefined); 
+
+// console.log(undefined); 
+
+// })(window);
+
+
+
+
+var undefined;
+
+(function(window,undefined){
+
+alert(window.undefined);
+
+alert(undefined); //此处undefined参数为局部的名称为undefined变量，值为undefined
+
+})(window,9);
+
+
+//  所以后者，就算外面的人把 ,undefined 定义了，里面的 undefined 依然不受影响。
+
+
+// 在jquery插件中我们经常看到以下这段代码
+
+// ;(function ( $, window, document, undefined ){
+
+
+
+// })(jQuery, window,document);
+
+
+
+// 1、代码最前面的分号，可以防止多个文件压缩合并以为其他文件最后一行语句没加分号，而引起合并后的语法错误。
+
+// 2、匿名函数(function(){})();：由于Javascript执行表达式是从圆括号里面到外面，所以可以用圆括号强制执行声明的函数。避免函数体内和外部的变量冲突。
+
+// 3、$实参:$是jquery的简写，很多方法和类库也使用$,这里$接受jQuery对象，也是为了避免$变量冲突，保证插件可以正常运行。
+
+// 4、window, document实参分别接受window, document对象，window, document对象都是全局环境下的，而在函数体内的window, document其实是局部变量，不是全局的window, document对象。这样做有个好处就是可以提高性能，减少作用域链的查询时间，如果你在函数体内需要多次调用window 或 document对象，这样把window或document对象当作参数传进去。
+
+
+// 原来在ES3中有一个BUG, underfined 是一个可读可写的变量， 可以给他任意赋值 但到了ES5就被修复了， 他只是一个只读的值，所有虽然没有报错， 但是赋值语句没有效果
+
+</script>
+
+</body>
+</html>
