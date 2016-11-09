@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+//http   通信协议  https 安全传输协议（数据加密）
+
+
+//bbs.yztcedu.com域名
+
+//Ip （10.0.88.88）:（8083）端口 默认（80）
+//同源策略 
+
+//非同源 ip 端口 协议 一种不同就是非同源 （ip端口和域名不能混合使用也算不同源）
+	
+//ajax 是一种客户端（浏览器端）和服务端通信技术
+//通常是页面通过脚本想服务器发送异步请求
+//同步与异步
+//同步类似接力比赛，一件事一件事按顺序执行。
+//异步更像短跑，多个事物同时进行，彼此不会等待。
+//0  ajax 通信对象创建 ，使用XMLHttpRequest （绝大多数浏览器）
+
+
+// XMLHttpResquest核心属性：
+// xhr.responseText: 服务端响应数据
+// xhr.responseXML：text/xml application/xml等类型响应也会存在该字段
+// xhr.status：http响应状态
+// xhr.statusText：http状态说明
+// xhr.readyState: 
+// 	new xhr()          //0
+// 	open()               //1
+// 	send()               //2
+// 	接到响应         //3
+// 	响应接收完毕//4
+// XMLHttpResquest核心方法：
+// //初始化请求的类型、url、是否异步默认为true
+// xhr.open();
+// //发送请求，get传null，post传参数
+// xhr.send();
+// //接收响应前执行abort终止xhr后续操作和访问
+// xhr.abort();
+
+// //readyState状态变更事件
+// xhr.onreadystatechange()
+
+
+
+
+
+
+
+
+
+// var xhr=new XMLHttpRequest();
+
+
+// //创建readystate状态变化监听函数
+
+
+// xhr.onreadystatechange=function(){
+
+
+// 	console.log(xhr.readyState)
+// 	 console.log(xhr.responseText)
+// 	console.log(xhr.status)
+// 	document.write(xhr.responseText)
+
+
+
+
+// }
+
+
+
+
+
+
+
+// //1 初始化通信对象
+//  xhr.open("get","ajaxTest.json" ,true);
+//  //2 发送请求
+
+//   xhr.send();
+
+
+//   //3 开始接收服务端数据
+
+
+//   //4 数据接收完毕
+
+
+
+
+//封装兼容低版本IE浏览器的xhr创建函数 ie低版本支持参数；"MSXML.XMLHttp.6.0"，"MSXML.XMLHttp.3.0","MSXML.XMLHttp"
+
+
+function createXhr(){
+
+	if  (   typeof XMLHttpRequest !="undefined"){
+		return new XMLHttpRequest();
+
+
+
+	}else if(typeof ActiveXObject !="undefined"){
+		//低版本IE使用ActiveXObject 传参方式创建xhr对象，主要支持一下参数
+		
+		var strList=["MSXML.XMLHttp.6.0","MSXML.XMLHttp.3.0","MSXML.XMLHttp"] ; 
+
+		 var tmp="";
+
+			for(var n in strList){
+
+				//异常处理，try中代码出现异常会执行catch中的代码，而不会影响到外部后续代码执行
+				try{
+					new ActiveXObject(strList[n]);
+					
+					var tmp=strList[n];
+
+					break;
+
+
+
+
+
+
+
+				}catch(e){
+					console.log(e);
+
+				}
+
+
+
+			}
+
+
+			if(tmp=""){
+				console.log("你的浏览器目前不支持ajax请求！")
+
+
+
+			}else{
+
+				return new ActiveXObject(tmp);
+
+			}
+
+
+
+
+
+
+
+
+
+		
+
+
+		
+
+
+
+	}else{
+		console.log("你的浏览器目前不支持ajax请求！")
+
+
+	}
+
+
+
+
+
+
+}
+//封装公共请求函数
+
+function sendRequest(callback){
+
+	//创建请求对象
+
+
+
+	var xhr=createXhr();
+	//绑定readyState监听事件
+	xhr.onreadystatechange=function(){
+		if(xhr.status=="200"||xhr.status=="304"){
+			if(xhr.readyState=="4"){
+				console.log(xhr.responseText)
+				//JSON.parse();
+				//console.log(JSON.parse(xhr.responseText))
+				callback&&callback(JSON.parse(xhr.responseText))
+
+
+
+			}
+
+
+
+
+
+		}
+	};
+	//请求对象初始化
+	xhr.open("get","ajaxTest.json",true);
+
+
+
+
+
+
+
+
+	//发送请求
+	xhr.send();
+
+
+
+
+
+
+
+}
+ sendRequest(showInfo);
+
+
+
+
+function showInfo(date){
+	for(var n in date.list){
+
+
+	}
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+	
+</body>
+</html>
